@@ -1,0 +1,16 @@
+# Executáveis
+compilador
+teste_lexico
+
+# Arquivos gerados pelo Bison e Flex
+parser.tab.c
+parser.tab.h
+lex.yy.c
+
+# Arquivos gerados pela execução
+Programa.j
+Programa.class
+
+# Arquivos temporários
+*.o
+*.tmp
