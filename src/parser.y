@@ -9,6 +9,10 @@ void yyerror(const char *s);
 extern int yylineno;
 extern FILE *yyin;
 
+int erro_lexico_pendente = 0;
+int erros_detectados = 0;
+int linha_erro_lexico = 0;
+
 static FILE *out;
 static FILE *main_out;
 static FILE *function_out;
@@ -120,6 +124,10 @@ lines:
     | lines while_statement
     | lines for_statement
     | lines function_definition
+    | lines error NEWLINE
+      {
+          yyerrok;
+      }
     ;
 
 function_head:
@@ -468,7 +476,7 @@ for_head:
         fputs("getstatic java/lang/System/err Ljava/io/PrintStream;\n", out);
         fputs("ldc \"Erro: range() nao aceita passo zero\"\n", out);
         fputs("invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V\n", out);
-        fputs("iconst_0\nireturn\n.end method\n\n", out);
+        fprintf(out, "goto L%d\n", $$->end_label);
 
         /* 2. Início do laço */
         fprintf(out, "L%d:\n", $$->start_label);
@@ -848,9 +856,22 @@ factor:
 %%
 
 void yyerror(const char *s) {
+    if (erro_lexico_pendente) {
+        erro_lexico_pendente = 0;
+        return;
+    }
+
+    int linha = yylineno;
+
+    if (strstr(s, "unexpected NEWLINE") && linha > 1) {
+        linha--;
+    }
+
     fprintf(stderr,
         "Erro sintático na linha %d: %s\n",
-        yylineno, s);
+        linha, s);
+
+    erros_detectados++;
 }
 
 int main(int argc, char **argv) {
@@ -924,7 +945,7 @@ int main(int argc, char **argv) {
     if (in != stdin)
         fclose(in);
 
-    if (result == 0) {
+    if (result == 0 && erros_detectados == 0) {
         printf(
             "Análise concluída. Código Jasmin gerado em: %s\n",
             output_name
@@ -933,5 +954,5 @@ int main(int argc, char **argv) {
         fprintf(stderr, "Compilação finalizada com erros.\n");
     }
 
-    return result;
+    return (result != 0 || erros_detectados > 0) ? 1 : 0;
 }

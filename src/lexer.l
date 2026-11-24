@@ -3,6 +3,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+extern int erro_lexico_pendente;
+extern int erros_detectados;
+extern int linha_erro_lexico;
 
 static int indent_stack[256] = {0};
 static int indent_top = 0;
@@ -70,6 +73,10 @@ NUM         {DIGITO}+(\.{DIGITO}+)?
         if (indent_top >= 255) {
             fprintf(stderr,
                 "Erro: limite de indentação excedido.\n");
+
+            erro_lexico_pendente = 1;
+            erros_detectados++;
+            linha_erro_lexico = yylineno;
             return INVALID;
         }
 
@@ -95,6 +102,9 @@ NUM         {DIGITO}+(\.{DIGITO}+)?
                 "Erro de indentação na linha %d.\n",
                 yylineno);
 
+            erro_lexico_pendente = 1;
+            erros_detectados++;
+            linha_erro_lexico = yylineno;
             return INVALID;
         }
 
@@ -201,6 +211,9 @@ NUM         {DIGITO}+(\.{DIGITO}+)?
         "Erro léxico na linha %d: caractere '%s' inválido.\n",
         yylineno, yytext);
 
+    erro_lexico_pendente = 1;
+    erros_detectados++;
+    linha_erro_lexico = yylineno;
     return INVALID;
 }
 
