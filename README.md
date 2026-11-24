@@ -18,28 +18,20 @@ O compilador realiza análise léxica e sintática dos programas de entrada e ge
 compilador_python_simples/
 ├── src/
 │   ├── lexer.l
-│   ├── parser.y
-│   ├── lexer_backup.l
-│   ├── parser_backup.y
-│   └── teste_lexico.c
+│   └── parser.y
 ├── examples/
-│   ├── exemplo.py
-│   ├── teste_if.py
-│   ├── teste_else.py
-│   ├── teste_while.py
-│   ├── teste_for.py
 │   ├── entrega_atribuicao.py
-│   ├── entrega_if_else.py
-│   ├── entrega_while.py
+│   ├── entrega_else.py
 │   ├── entrega_for.py
 │   ├── entrega_funcao.py
 │   ├── entrega_funcao_parametros.py
+│   ├── entrega_if_else.py
 │   ├── entrega_operadores.py
-│   ├── entrega_else.py
-│   └── ...
+│   └── entrega_while.py
 ├── Makefile
 ├── README.md
 ├── exemplos.txt
+├── testar_todos.sh
 └── .gitignore
 ```
 
@@ -74,7 +66,7 @@ make
 ### 1. Compilar um programa
 
 ```bash
-./compilador examples/exemplo.py Programa.j
+./compilador examples/entrega_atribuicao.py Programa.j
 ```
 
 O compilador recebe o arquivo de entrada e gera o código Jasmin correspondente.
@@ -100,7 +92,7 @@ java Programa
 - Reconhecimento de operadores aritméticos e relacionais;
 - Controle de indentação e desindentação para delimitação de blocos;
 - Análise sintática utilizando Bison;
-- Identificação de erros léxicos e sintáticos, com mecanismos de recuperação.
+- Identificação de erros léxicos e sintáticos.
 
 ### Variáveis e expressões
 
@@ -145,24 +137,33 @@ As principais construções previstas na gramática foram implementadas, incluin
 Existem, entretanto, algumas diferenças entre a gramática apresentada e a implementação:
 
 - **Comando `for`:** a gramática apresenta `for identificador in expressão`, enquanto a implementação atual aceita exclusivamente a utilização de `range()`.
-- **Comando `import`:** o lexer reconhece a palavra reservada, mas o comando não possui implementação correspondente no analisador sintático.
+- **Comando `import`:** o compilador aceita sintaticamente declarações no formato `import nome_modulo`. Entretanto, o carregamento e a utilização efetiva das bibliotecas importadas ainda não estão implementados.
 - **Recursos adicionais:** o compilador também implementa `print()`, chamadas de funções e operadores lógicos, que não estão explicitamente descritos na gramática fornecida.
 
 O arquivo `exemplos.txt` reúne trechos de código que demonstram as construções da linguagem e os recursos adicionais implementados.
 
-## Exemplos de testes
+## Exemplos e testes
 
-A pasta `examples/` contém programas utilizados para validar individualmente as funcionalidades do compilador, incluindo:
+A pasta `examples/` contém oito programas preparados para demonstrar as principais funcionalidades do compilador:
 
-- Operações aritméticas e precedência;
-- Estruturas condicionais;
-- Estruturas de repetição;
-- Operadores relacionais e lógicos;
-- Diferentes formas de utilização de `range()`;
-- Funções com diferentes quantidades de parâmetros;
-- Chamadas encadeadas de funções;
-- Estruturas condicionais e de repetição dentro de funções;
-- Tratamento de erros léxicos e sintáticos.
+- `entrega_atribuicao.py`: atribuição de variáveis e expressões aritméticas;
+- `entrega_else.py`: estrutura condicional `else`;
+- `entrega_for.py`: estrutura de repetição `for`;
+- `entrega_funcao.py`: declaração e chamada de funções;
+- `entrega_funcao_parametros.py`: funções com parâmetros;
+- `entrega_if_else.py`: estruturas condicionais `if/else`;
+- `entrega_operadores.py`: utilização de operadores;
+- `entrega_while.py`: estrutura de repetição `while`.
+
+O projeto também possui o script `testar_todos.sh`, que automatiza a compilação e a execução de todos os programas presentes na pasta `examples/`.
+
+Para executar os testes automatizados:
+
+```bash
+./testar_todos.sh
+```
+
+Na última execução, os oito programas foram compilados e executados sem falhas.
 
 ## Limitações
 
@@ -173,7 +174,7 @@ Entre as limitações estão:
 - Operações e valores tratados como inteiros;
 - Funções limitadas a três parâmetros;
 - Utilização de `range()` obrigatória na estrutura `for`;
-- Ausência de implementação do comando `import`;
+- O comando `import` é reconhecido sintaticamente, mas não realiza o carregamento de módulos ou bibliotecas;
 - Ausência de suporte a diversos recursos da linguagem Python original.
 
-A implementação foi desenvolvida de forma incremental, com testes individuais para verificar o funcionamento dos recursos implementados.
+A implementação foi desenvolvida de forma incremental, com testes individuais durante o desenvolvimento para verificar o funcionamento dos recursos implementados.

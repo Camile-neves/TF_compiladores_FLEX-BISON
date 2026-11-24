@@ -251,6 +251,12 @@ simple_statement:
           free($1);
           free($3);
       }
+
+    | IMPORT IDENTIFIER
+      {
+          free($2);
+      }
+      
     | PRINT LPAREN expression RPAREN
       {
           fputs(
