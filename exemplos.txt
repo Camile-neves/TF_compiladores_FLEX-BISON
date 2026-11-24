@@ -1,0 +1,120 @@
+==================================================
+EXEMPLOS DA GRAMATICA SIMPLIFICADA DE PYTHON
+==================================================
+
+1. ATRIBUICAO E EXPRESSOES ARITMETICAS
+
+a = 10
+b = 5
+c = a + b
+d = a - b
+e = a * b
+f = a / b
+g = (a + b) * 2
+
+
+2. ESTRUTURA IF
+
+numero = 10
+
+if numero > 5:
+    resultado = numero
+
+
+3. ESTRUTURA IF E ELSE
+
+numero = 3
+
+if numero > 5:
+    resultado = 1
+else:
+    resultado = 0
+
+
+4. ESTRUTURA WHILE
+
+contador = 5
+
+while contador > 0:
+    contador = contador - 1
+
+
+5. ESTRUTURA FOR
+
+for i in range(5):
+    resultado = i
+
+OBSERVACAO: A gramatica do professor apresenta
+uma expressao apos o IN. A implementacao atual
+do compilador aceita somente range().
+
+
+6. DEFINICAO DE FUNCAO SEM PARAMETROS
+
+def calcular():
+    resultado = 10
+    return resultado
+
+
+7. DEFINICAO DE FUNCAO COM PARAMETRO
+
+def dobro(numero):
+    resultado = numero * 2
+    return resultado
+
+
+8. DEFINICAO DE FUNCAO COM DOIS PARAMETROS
+
+def somar(a, b):
+    resultado = a + b
+    return resultado
+
+
+9. OPERADORES RELACIONAIS
+
+a = 10
+b = 5
+
+if a == b:
+    resultado = 1
+
+if a != b:
+    resultado = 2
+
+if a < b:
+    resultado = 3
+
+if a > b:
+    resultado = 4
+
+if a <= b:
+    resultado = 5
+
+if a >= b:
+    resultado = 6
+
+
+==================================================
+RECURSOS ADICIONAIS IMPLEMENTADOS
+==================================================
+
+10. COMANDO PRINT
+
+print(10)
+
+
+11. CHAMADA DE FUNCAO SEM PARAMETROS
+
+def mostrar():
+    return 10
+
+mostrar()
+
+
+12. CHAMADA DE FUNCAO COM PARAMETROS
+
+def somar(a, b):
+    return a + b
+
+resultado = somar(10, 20)
+print(resultado)
